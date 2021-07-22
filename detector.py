@@ -5,17 +5,18 @@ import os
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--image', help='')
+parser.add_argument('--gt-image', help='provide a datamatrix image as a GT')
 parser.add_argument('--blockSize', type=int, help='Size of the neighbourhood', default=4)
 parser.add_argument('--kSize', type=int, help='Sobel kernel size', default=3)
 parser.add_argument('--k', type=float, help='Harris free parameter', default=0.06)
-parser.add_argument('--thr', type=float, help='Threshold', default=0.005)
+parser.add_argument('--thr', type=float, help='Threshold', default=0.001)
 parser.add_argument('--thrArea', type=float, help='Box area threshold', default=1000)
 parser.add_argument('--matches', type=int, help='Box area threshold', default=100)
 args = parser.parse_args()
 
 os.makedirs('output', exist_ok=True)
 
-gt = cv2.imread('gt.png')
+gt = cv2.imread(args.gt_image)
 gt = cv2.cvtColor(gt, cv2.COLOR_BGR2GRAY)
 gt = cv2.resize(gt, (800, 600), interpolation=cv2.INTER_CUBIC)
 
